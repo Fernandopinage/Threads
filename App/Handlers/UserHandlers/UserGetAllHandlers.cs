@@ -19,13 +19,14 @@ namespace App.Handlers.UserHandlers
         public async Task<List<UserGetAllResponse>> Handle(UserGetAllQuery request, CancellationToken cancellationToken)
         {
             var users =  await _userRepository.GetAllAsync();
-
-            return users.Select(user => new UserGetAllResponse
+            var result =  users.Select(user => new UserGetAllResponse
             {
                 Id = user.Id,
                 Name = user.Name,
                 Email = user.Email
             }).ToList();
+
+            return result;
         }
     }
 }

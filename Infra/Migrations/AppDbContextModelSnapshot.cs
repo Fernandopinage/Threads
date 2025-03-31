@@ -50,7 +50,7 @@ namespace Infra.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(5)
+                        .HasMaxLength(225)
                         .HasColumnType("varchar(225)")
                         .HasColumnName("password");
 
@@ -60,7 +60,7 @@ namespace Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

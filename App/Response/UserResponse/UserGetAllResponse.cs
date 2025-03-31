@@ -1,6 +1,6 @@
 ﻿namespace App.Response.UserResponse
 {
-    public class UserGetAllResponse
+    public record UserGetAllResponse
     {
         public Guid Id { get; set; }
 

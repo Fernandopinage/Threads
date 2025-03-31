@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Domain.Entity
 {
-    [Table("User")]
+    [Table("Users")]
     public class User
     {
         [Key]
@@ -26,10 +22,10 @@ namespace Domain.Entity
         public string Email { get; set; }
 
         [Required]
-        [StringLength(5)]
+        [StringLength(225, MinimumLength = 6)]
         [Column("password", TypeName = "varchar(225)")]
-
         public string Password { get; set; }
+
         [Column("description", TypeName = "varchar(225)")]
         public string Description { get; set; }
 
