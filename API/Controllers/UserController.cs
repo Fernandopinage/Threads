@@ -1,4 +1,5 @@
-﻿using App.Command.UserCommand;
+﻿using System.Formats.Asn1;
+using App.Command.UserCommand;
 using App.Query.UserQuery;
 using App.Response.UserResponse;
 using MediatR;
@@ -49,6 +50,17 @@ namespace API.Controllers
 
             return Ok(result);
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<UserUpdateResponse>> Update(Guid id, [FromBody] UserUpdateCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if (id != command.Id)
+                return BadRequest(new { message = "O ID informado na URL não corresponde ao ID do corpo da requisição." });
+
+            return Ok(result);
+        }
+
 
 
     }
