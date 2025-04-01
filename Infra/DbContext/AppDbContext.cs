@@ -1,4 +1,5 @@
 ﻿using Domain.Entity;
+using Infra.Data.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -21,5 +22,11 @@ public class AppDbContext : DbContext
             var connectionString = _configuration.GetConnectionString("DefaultConnection");
             optionsBuilder.UseNpgsql(connectionString, b => b.MigrationsAssembly("Infra"));
         }
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
     }
 }
