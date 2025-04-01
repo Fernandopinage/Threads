@@ -14,7 +14,7 @@ namespace Infra.Repository.BaseRepository
             _dbSet = _context.Set<T>();
         }
 
-        public async Task<T?> GetByIdAsync(int id)
+        public async Task<T?> GetByIdAsync(Guid id)
         {
             return await _dbSet.FindAsync(id);
         }

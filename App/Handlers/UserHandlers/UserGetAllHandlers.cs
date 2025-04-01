@@ -2,7 +2,6 @@
 
 using App.Query.UserQuery;
 using App.Response.UserResponse;
-using Domain.Entity;
 using Infra.Repository.Interface;
 using MediatR;
 

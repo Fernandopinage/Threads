@@ -4,5 +4,6 @@ namespace Infra.Repository.Interface
 {
     public interface IUserRepository : IBaseRepository<User>
     {
+       
     }
 }

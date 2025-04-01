@@ -37,6 +37,19 @@ namespace API.Controllers
             return Ok(result);
         }
 
+        // GET: api/user/{id}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserGetByIdResponse>> GetById(Guid id)
+        {
+            var query = new UserGetByIdQuery { Id = id };
+            var result = await _mediator.Send(query);
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
+        }
+
 
     }
 }
