@@ -33,12 +33,13 @@ namespace Infra.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
+                        .HasMaxLength(225)
                         .HasColumnType("varchar(225)")
                         .HasColumnName("description");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(50)
+                        .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
                         .HasColumnName("email");
 
@@ -60,7 +61,7 @@ namespace Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 #pragma warning restore 612, 618
         }

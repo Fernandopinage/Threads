@@ -3,6 +3,9 @@ using Infra.Repository.BaseRepository;
 using Infra.Repository.Interface;
 using Infra.Repository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,9 +24,9 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.AllowAnyOrigin()   // Permite qualquer origem
-              .AllowAnyHeader()  // Permite qualquer cabeçalho
-              .AllowAnyMethod(); // Permite qualquer método (GET, POST, etc.)
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
 
@@ -35,6 +38,31 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Configurando a injeção de dependências
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+// Configuração de Autenticação JWT
+var secretKey = builder.Configuration["JwtSettings:SecretKey"];
+var issuer = builder.Configuration["JwtSettings:Issuer"];
+var audience = builder.Configuration["JwtSettings:Audience"];
+
+builder.Services.AddScoped<IAuthService>(provider => new AuthJwtService(secretKey, issuer, audience));
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+        ValidIssuer = issuer,
+        ValidAudience = audience
+    };
+});
 
 var app = builder.Build();
 
@@ -50,6 +78,7 @@ app.UseCors("AllowAll");
 
 // Configura o redirecionamento para HTTPS e autorização
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 
 // Mapeia os controladores

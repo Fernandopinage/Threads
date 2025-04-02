@@ -1,4 +1,6 @@
-﻿using Infra.Repository.Interface;
+﻿using System.Linq.Expressions;
+using Domain.Entity;
+using Infra.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Repository.BaseRepository
@@ -49,6 +51,11 @@ namespace Infra.Repository.BaseRepository
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<T> GetByAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _dbSet.FirstOrDefaultAsync(predicate);
         }
     }
 }

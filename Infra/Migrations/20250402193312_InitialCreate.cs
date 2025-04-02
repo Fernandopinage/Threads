@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,9 +17,9 @@ namespace Infra.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    email = table.Column<string>(type: "varchar(100)", maxLength: 50, nullable: false),
+                    email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     password = table.Column<string>(type: "varchar(225)", maxLength: 225, nullable: false),
-                    description = table.Column<string>(type: "varchar(225)", nullable: false),
+                    description = table.Column<string>(type: "varchar(225)", maxLength: 225, nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
