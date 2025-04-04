@@ -1,5 +1,6 @@
 ﻿using App.Query.AuthQuery;
 using App.Response.AuthResponse;
+using App.Utils;
 using Infra.Repository.Interface;
 using MediatR;
 
@@ -25,7 +26,7 @@ namespace App.Handlers.AuthHandlers
                 throw new KeyNotFoundException("Usuário não encontrado.");
             }
 
-            if (user.Password == request.Password)
+            if (PasswordHasherUtils.VerifyPassword(request.Password, user.Password))
             {
                 return new AuthenticationResponse
                 {

@@ -1,5 +1,6 @@
 ﻿using App.Command.UserCommand;
 using App.Response.UserResponse;
+using App.Utils;
 using Domain.Entity;
 using Infra.Repository.Interface;
 using MediatR;
@@ -18,7 +19,7 @@ namespace App.Handlers.UserHandlers
             {
                 Name = request.Name,
                 Email = request.Email,
-                Password = request.Password,
+                Password = PasswordHasherUtils.HashPassword(request.Password),
                 Description = request.Description
             };
 
